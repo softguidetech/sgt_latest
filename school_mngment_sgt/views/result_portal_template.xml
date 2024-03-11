@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_evaluations" name="Show Evaluations in portal" customize_show="True"
+              inherit_id="portal.portal_my_home" priority="25">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Evaluations</t>
+                <t t-set="url" t-value="'/my/evaluations'"/>
+                <t t-set="placeholder_count" t-value="'eval_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_evaluations" name="Evaluations">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Evaluations</t>
+            </t>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/home/{{ keep_query() }}"
+                                    >
+                                        "/my/home"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-if="evaluations" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Student Name</th>
+                        <th>Evaluation Date</th>
+                        <th>Total Points</th>
+                    </tr>
+                </thead>
+                <t t-foreach="evaluations" t-as="evaluation">
+                    <tr>
+                        <td>
+                            <a
+                                    t-attf-href="/my/evaluation/#{evaluation.id}?{{ keep_query() }}"
+                            >
+                                <span t-field="evaluation.student_id.name"/>
+                            </a>
+                        </td>
+                        <td>
+                            <span t-field="evaluation.date"/>
+                        </td>
+                        <td>
+                            <span t-field="evaluation.total"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no Results.</p>
+        </t>
+    </template>
+
+    <template id="portal_my_evaluation" name="Evaluation Portal Template">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/evaluations/{{ keep_query() }}"
+                                    >
+                                        "/my/evaluations"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <div class="row mb-4">
+                        <div id="eval_details">
+                            <table class="table table-sm" id="evaluation_detail">
+                                <thead class="bg-100">
+                                    <tr>
+                                        <th name="th_result_qstn" class="text-left">Question</th>
+<!--                                        <th name="th_result_point" class="text-left">Rating</th>-->
+                                        <th name="th_result_rating" class="text-right">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="exam_timetable_tbody">
+                                    <t t-foreach="evaluation_obj.eval_line_ids" t-as="line">
+                                        <tr>
+                                            <td name="td_result_qstn">
+                                                <span t-field="line.stu_eval_id.desc"/>
+                                            </td>
+<!--                                            <td name="td_result_point">-->
+<!--                                                <span t-field="line.point_id.name"/>-->
+<!--                                            </td>-->
+                                            <td name="td_result_rating">
+                                                <span t-field="line.rating"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

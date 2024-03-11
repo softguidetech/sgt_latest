@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="report_student_student" model="ir.actions.report">
+        <field name="name">Identity Card</field>
+        <field name="model">student.student</field>
+        <field name="binding_model_id" ref="model_student_student"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.identity_card</field>
+        <field name="report_file">school_mngment_sgt.identity_card</field>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('school_mngment_sgt.group_school_administration')),
+                                       (4, ref('school_mngment_sgt.group_school_teacher')),
+                                       (4, ref('school_mngment_sgt.group_school_student'))]"/>
+    </record>
+    <record id="report_school_school_identity_card" model="ir.actions.report">
+        <field name="name">Identity Card</field>
+        <field name="model">school.teacher</field>
+        <field name="binding_model_id" ref="model_school_teacher"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.teacher_identity_card</field>
+        <field name="report_file">school_mngment_sgt.teacher_identity_card</field>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="report_product_label_custome" model="ir.actions.report">
+        <field name="name">QR Code Report</field>
+        <field name="model">product.product</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.qrcode_label</field>
+        <field name="report_file">school_mngment_sgt.qrcode_label</field>
+        <field name="binding_model_id" ref="product.model_product_product"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('school_mngment_sgt.group_librarian'))]"/>
+    </record>
+
+    <record id="eduerp_paperformat_margin" model="report.paperformat">
+        <field name="name">Library Card Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">A6</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+    </record>
+
+    <record id="reportcodedetails_qweb" model="ir.actions.report">
+        <field name="name">Card Details Report</field>
+        <field name="model">library.card</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.card_details</field>
+        <field name="report_file">school_mngment_sgt.card_details</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_library_card"/>
+        <field name="paperformat_id" ref="school_mngment_sgt.eduerp_paperformat_margin"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('school_mngment_sgt.group_librarian'))]"/>
+    </record>
+
+
+    <record id="paperformat_margin" model="report.paperformat">
+        <field name="name">Report margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <record id="report_student_transport_qweb" model="ir.actions.report">
+        <field name="name">Transport Root Detail</field>
+        <field name="model">student.transport</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.participants</field>
+        <field name="report_file">school_mngment_sgt.participants</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_student_transport"/>
+        <field name="paperformat_id" ref="school_mngment_sgt.paperformat_margin"/>
+        <field name="binding_type">report</field>
+        <field name="groups_id" eval="[(4, ref('school_mngment_sgt.group_transportation_manager'))]"/>
+    </record>
+
+    <record id="paperformat_margin" model="report.paperformat">
+        <field name="name">Report margin</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">50</field>
+        <field name="margin_bottom">30</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">45</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <record id="report_student_payslip_qweb" model="ir.actions.report">
+        <field name="name">Student Payslip</field>
+        <field name="model">student.payslip</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.student_payslip</field>
+        <field name="report_file">school_mngment_sgt.student_payslip</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_student_payslip"/>
+        <field name="paperformat_id" ref="school_mngment_sgt.paperformat_margin"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_student_fees_register_qweb" model="ir.actions.report">
+        <field name="name">Fees Register</field>
+        <field name="model">student.fees.register</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.student_fees_register</field>
+        <field name="report_file">school_mngment_sgt.student_fees_register</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_student_fees_register"/>
+        <field name="paperformat_id" ref="school_mngment_sgt.paperformat_margin"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_time_table_qweb" model="ir.actions.report">
+        <field name="name">Timetable</field>
+        <field name="print_report_name">'Timetable(%s)'%object.standard_id.name</field>
+        <field name="model">time.table</field>
+        <field name="binding_model_id" ref="model_time_table"/>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.timetable</field>
+        <field name="report_file">school_mngment_sgt.timetable</field>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+
+
+     <record id="additional_exam_result_id_qweb" model="ir.actions.report">
+        <field name="name">Additional Exam Result</field>
+        <field name="model">additional.exam.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_additional_exam_result"/>
+        <field name="report_name">school_mngment_sgt.additional_exam_result_report</field>
+        <field name="report_file">school_mngment_sgt.additional_exam_result_report</field>
+    </record>
+
+    <record id="result_info_id_qweb" model="ir.actions.report">
+        <field name="name">Result Transcript</field>
+        <field name="model">student.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school_mngment_sgt.result_information_report</field>
+        <field name="report_file">school_mngment_sgt.result_information_report</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_student_student"/>
+        <field name="groups_id" eval="[(4, ref('school_mngment_sgt.group_school_administration')),
+                                       (4, ref('school_mngment_sgt.group_school_teacher')),
+                                       (4, ref('school_mngment_sgt.group_school_student')),
+                                       (4, ref('school_mngment_sgt.group_school_parent'))]"/>
+    </record>
+
+    <record id="batch_result_qweb" model="ir.actions.report">
+        <field name="name">BatchWise Result</field>
+        <field name="model">exam.batchwise.result</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="school_mngment_sgt.model_exam_batchwise_result"/>
+        <field name="report_name">school_mngment_sgt.exam_result_batch</field>
+        <field name="report_file">school_mngment_sgt.exam_result_batch</field>
+    </record>
+
+    <record id="add_exam_result_id_qweb" model="ir.actions.report">
+        <field name="name">Exam Result</field>
+        <field name="model">school.teacher</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" eval="False"/>
+        <field name="report_name">school_mngment_sgt.exam_result_report</field>
+        <field name="report_file">school_mngment_sgt.exam_result_report</field>
+    </record>
+
+
+</odoo>

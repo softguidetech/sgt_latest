@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_payslips" name="Show Payslips in portal" customize_show="True"
+              inherit_id="portal.portal_my_home" priority="25">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Payslips</t>
+                <t t-set="url" t-value="'/my/payslips'"/>
+                <t t-set="placeholder_count" t-value="'payslip_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_payslips" name="Payslips">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Payslips</t>
+            </t>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/home/{{ keep_query() }}"
+                                    >
+                                        "/my/home"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-if="payslips" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Description</th>
+                        <th>Number</th>
+                        <th>Date</th>
+                        <th>Register</th>
+                        <th>State</th>
+                    </tr>
+                </thead>
+                <t t-foreach="payslips" t-as="payslip">
+                    <tr>
+                        <td>
+                            <a
+                                    t-attf-href="/my/payslip/#{payslip.id}?{{ keep_query() }}"
+                            >
+                                <span t-field="payslip.name"/>
+                            </a>
+                        </td>
+                        <td>
+                            <span t-field="payslip.number"/>
+                        </td>
+<!--                        <td>-->
+<!--                            <span t-field="payslip.student_id.name"/>-->
+<!--                        </td>-->
+                        <td>
+                            <span t-field="payslip.date"/>
+                        </td>
+                        <td>
+                            <span t-field="payslip.register_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="payslip.state"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no Payslips.</p>
+        </t>
+    </template>
+
+    <template id="portal_my_payslip" name="Payslip Portal Template">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/payslips/{{ keep_query() }}"
+                                    >
+                                        "/my/payslips"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6" name="payslip">
+                            <div>
+                                <strong>Class:</strong>
+                                <span t-field="payslip_obj.standard_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Date:</strong>
+                                <span t-field="payslip_obj.division_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Medium:</strong>
+                                <span t-field="payslip_obj.medium_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Fees Structure:</strong>
+                                <span t-field="payslip_obj.fees_structure_id.name"/>
+                            </div>
+                        </div>
+                        <div id="payslip_details">
+                            <table class="table table-sm" id="payslip_detail">
+                                <thead class="bg-100">
+                                    <tr>
+                                        <th name="th_payslip_name" class="text-left">Name</th>
+                                        <th name="th_payslip_code" class="text-left">Code</th>
+                                        <th name="th_payslip_duration" class="text-right">Duration</th>
+                                        <th name="th_payslip_account" class="text-left">Account</th>
+                                        <th name="th_payslip_amount" class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="exam_timetable_tbody">
+                                    <t t-foreach="payslip_obj.line_ids" t-as="line">
+                                        <tr>
+                                            <td name="td_payslip_name">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <td name="td_payslip_code">
+                                                <span t-field="line.code"/>
+                                            </td>
+                                            <td name="td_payslip_duration">
+                                                <span t-field="line.type"/>
+                                            </td>
+                                            <td name="td_payslip_account" class="text-right">
+                                                <span t-field="line.account_id.name"/>
+                                            </td>
+                                            <td name="td_payslip_amount" class="text-right">
+                                                <span t-field="line.amount"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

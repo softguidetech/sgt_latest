@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="portal_my_home_assignments" name="Show Assignments in portal" customize_show="True"
+              inherit_id="portal.portal_my_home" priority="24">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">Assignments</t>
+                <t t-set="url" t-value="'/my/assignments'"/>
+                <t t-set="placeholder_count" t-value="'assignment_count'"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_assignments" name="Exam Time table">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Assignments</t>
+            </t>
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/home/{{ keep_query() }}"
+                                    >
+                                        "/my/home"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+            </t>
+            <t t-if="assignments" t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Assignment Name</th>
+                        <th>Teacher</th>
+                        <th>Subject</th>
+                        <th>Class</th>
+                        <th>Assign Date</th>
+                        <th>Due Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <t t-foreach="assignments" t-as="assignment">
+                    <tr>
+                        <td>
+                            <a
+                                    t-attf-href="/my/assignment/#{assignment.id}?{{ keep_query() }}"
+                            >
+                                <span t-field="assignment.name"/>
+                            </a>
+                        </td>
+                        <td>
+                            <span t-field="assignment.teacher_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="assignment.subject_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="assignment.standard_id.name"/>
+                        </td>
+                        <td>
+                            <span t-field="assignment.assign_date"/>
+                        </td>
+                        <td>
+                            <span t-field="assignment.due_date"/>
+                        </td>
+                        <td>
+                            <span t-field="assignment.state"/>
+                        </td>
+                    </tr>
+                </t>
+            </t>
+            <p t-else="">There are currently no Assignmentses.</p>
+        </t>
+    </template>
+
+    <template id="portal_my_assignment" name="Assignment Portal Template">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-12">
+                            <h5 class="d-flex mb-1 mb-md-0 row">
+                                <td>
+                                    <a
+                                            t-attf-href="/my/assignments/{{ keep_query() }}"
+                                    >
+                                        "/my/assignments"
+                                    </a>
+                                </td>
+                            </h5>
+                        </div>
+                    </div>
+                </t>
+                 <t t-set="card_body">
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6" name="assignment">
+                            <div>
+                                <strong>Assignment Name:</strong>
+                                <span t-field="assignment_obj.name"/>
+                            </div>
+                            <div>
+                                <strong>Teacher:</strong>
+                                <span t-field="assignment_obj.teacher_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Standard:</strong>
+                                <span t-field="assignment_obj.standard_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Subject:</strong>
+                                <span t-field="assignment_obj.subject_id.name"/>
+                            </div>
+                            <div>
+                                <strong>Assign Date:</strong>
+                                <span t-field="assignment_obj.assign_date"/>
+                            </div>
+                            <div>
+                                <strong>Due Date:</strong>
+                                <span t-field="assignment_obj.due_date"/>
+                            </div>
+                            <div>
+                                <strong>Submission Type:</strong>
+                                <span t-field="assignment_obj.submission_type"/>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
